@@ -23,6 +23,10 @@ async def echo(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
     await update.message.reply_text(update.message.text)
 
 
+async def check(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
+    await update.message.reply_text('photo!')
+
+
 async def send(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
     await update.message.reply_document('1.txt')
 
@@ -40,6 +44,9 @@ def main() -> None:
     # on non command i.e message - echo the message on Telegram
     application.add_handler(
         MessageHandler(filters.TEXT & ~filters.COMMAND, echo))
+
+    application.add_handler(
+        MessageHandler(filters.PHOTO, send))
 
     # Run the bot until the user presses Ctrl-C
     application.run_polling(allowed_updates=Update.ALL_TYPES)
